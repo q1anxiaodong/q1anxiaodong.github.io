@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>类似@xxx的依赖是什么？ | Blog</title><meta name="author" content="QXD"><meta name="copyright" content="QXD"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为啥会有@xxx格式的npm包&ensp;&ensp;事情还得从一个开源的聊天室项目说起。&ensp;&ensp;在拜读前辈的聊天应用源码时，发现源码本身根按照前后端、数据库、命令行工具、手机app等划分了几个项目。其中一部分又存在依赖关系，例如server端的项目同时依赖于database、bin，但是在package.json中的依赖是以 123&quot;dependencies&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类似@xxx的依赖是什么？">
+<meta property="og:url" content="http://example.com/2024/03/19/tech/npm/@xxx%E5%BD%A2%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="为啥会有@xxx格式的npm包&ensp;&ensp;事情还得从一个开源的聊天室项目说起。&ensp;&ensp;在拜读前辈的聊天应用源码时，发现源码本身根按照前后端、数据库、命令行工具、手机app等划分了几个项目。其中一部分又存在依赖关系，例如server端的项目同时依赖于database、bin，但是在package.json中的依赖是以 123&quot;dependencies&quot;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/avatar.jpg">
+<meta property="article:published_time" content="2024-03-19T05:48:35.000Z">
+<meta property="article:modified_time" content="2024-03-19T13:38:22.085Z">
+<meta property="article:author" content="QXD">
+<meta property="article:tag" content="npm">
+<meta property="article:tag" content="前端工程化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/assets/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/03/19/tech/npm/@xxx%E5%BD%A2%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '类似@xxx的依赖是什么？',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-19 21:38:22'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Blog"><span class="site-name">Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">类似@xxx的依赖是什么？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-19T05:48:35.000Z" title="发表于 2024-03-19 13:48:35">2024-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-19T13:38:22.085Z" title="更新于 2024-03-19 21:38:22">2024-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/npm/">npm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="类似@xxx的依赖是什么？"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="为啥会有-xxx格式的npm包"><a href="#为啥会有-xxx格式的npm包" class="headerlink" title="为啥会有@xxx格式的npm包"></a>为啥会有@xxx格式的npm包</h1><p>&ensp;&ensp;事情还得从一个开源的<a target="_blank" rel="noopener" href="https://github.com/yinxin630/fiora">聊天室项目</a>说起。<br>&ensp;&ensp;在拜读前辈的聊天应用源码时，发现源码本身根按照前后端、数据库、命令行工具、手机app等划分了几个项目。其中一部分又存在依赖关系，例如<a target="_blank" rel="noopener" href="https://github.com/yinxin630/fiora/blob/master/packages/server/package.json#L11">server端</a>的项目同时依赖于database、bin，但是在package.json中的依赖是以</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;@fiora/bin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.0.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>形式引入。其实像上面提到的<code>@xxx/xx</code>这样诡异的依赖，工作中这种格式的包并不少见，比如<code>@babel/runtime</code>、<code>@rollup/plugin-terser</code>还有<code>@typescript-eslint/parser</code>，但是后者在我的狗脑子看来无非就是人家开发组织庞大，实力雄厚，取些标新立异的依赖名秀肌肉而已，很正常。但是凭直觉判断<code>@fiora/bin</code>这个包应该不会在npm仓库中，所以把这个问题抛给了Claude, 从它给的解释才知道依赖项名称为<code>@xxx</code>的包的含义。</p>
+<h2 id="有哪些情况会出现这种格式的包"><a href="#有哪些情况会出现这种格式的包" class="headerlink" title="有哪些情况会出现这种格式的包"></a>有哪些情况会出现这种格式的包</h2><p>废话少说，直接下结论：<br>对于以<code>@xxx/xx</code>形式命名的依赖，有以下几种情况：</p>
+<ul>
+<li><code>@组织/用户名/包名</code>：一些组织&#x2F;个人会在npm上发布自己开发的包，但是可能会重名，所以可以在npm注册一个自己名字的作用域防止取名冲突。</li>
+<li><code>@项目名/模块名</code>：一些大型、支持扩展、社区活跃的项目通常会把重要的代码分模块发布出去，就像上面的babel、rollup那几个包，这些包的命名通常跟项目和所属模块相关。</li>
+<li><code>@公司名/包名</code>：一些公司会自己维护一个内部的npm仓库，所以不同公司会有不同的包命名约定，其中一部分可能会以<code>@公司/团队名/包名</code>格式避免内部包名冲突。</li>
+<li><code>本地连接的包</code>: 一些项目会以多包仓库的形式管理代码，当每个包之间需要互相依赖时为了不再重复下载依赖、不用重复配置、易于管理等，所以有了<strong>Yarn Workspace</strong> + <strong>monorepo</strong> + <code>@仓库名/项目名</code>方案。</li>
+</ul>
+<h2 id="monorepo-和-lerna-和-Yarn-Workspace"><a href="#monorepo-和-lerna-和-Yarn-Workspace" class="headerlink" title="monorepo 和 lerna 和 Yarn Workspace"></a><strong>monorepo</strong> 和 <strong>lerna</strong> 和 <strong>Yarn Workspace</strong></h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350317373?utm_id=0">一定一定要去看！！！</a></p>
+<p>关于这一块，我自认为没有大神讲的好，大家可以<strong>移步到上面的链接</strong>看看这部分内容，深入浅出，受益匪浅！</p>
+<p>下面是个人的理解。</p>
+<p>经常维护多项目仓库的小伙伴们都知道，同一个包可能被多个项目依赖，但是在仓库没有脚手架的时候只能每个项目里分别单独安装这个包，很消耗磁盘空间。另外项目与项目间需要依赖时也只能打包到另一个本地项目里，非~ 常~ 难~ 受~，所以有了monorepo这个概念。</p>
+<ul>
+<li>一个项目放一个仓库，同时管理多个仓库。这叫multi-repo</li>
+<li><strong>很多个项目放在一个仓库，只需要维护一个git仓库，里面的每个项目叫做工作空间&#x2F;包。这叫mono-repo。</strong></li>
+</ul>
+<p>multi-repo方式对于多模块项目不够友好。对于一般的项目&#x2F;团队来说，multi-repo方式简单直白而且也够用了。可对于同一部门&#x2F;同一业务&#x2F;同一工具链&#x2F;主体-扩展系列的项目集而言有很多弊端（调试、相互依赖等）。标题中提到的方法就提供了这种在一个库里构建项目的能力，让我们不用将项目发布到远程注册表来解决弊端。同时这种能力使得直接使用<code>npm link</code>方法变得过时。</p>
+<p>lerna和yarn workspaces就是这样的方法，具体来说lerna比yarn workspaces还先出，yarn workspaces只是近几年才支持的，npm workspaces好像更靠后才支持（目前已支持）。</p>
+<h3 id="配置mono-repo的不同方法"><a href="#配置mono-repo的不同方法" class="headerlink" title="配置mono-repo的不同方法"></a>配置mono-repo的不同方法</h3><ol>
+<li><p>npm init<br>这种方法已经被淘汰了，我也没有继续深入，古老低效并且有上位替代的技术可以不用特别关注~</p>
+</li>
+<li><p>lerna + npm<br>这里参考前面大佬的文章即可。我这里提一点注意事项：<br>lerna官方在7.0.0版本废弃了<code>lerna bootstrap</code>等指令，具体背景见<a target="_blank" rel="noopener" href="https://lerna.js.org/docs/legacy-package-management">链接</a>。所以原文中从设置npm脚本指令<code>bootstrap</code>这步(包括这步)开始按如下方法进行：</p>
+<ul>
+<li>确定自己安装的lerna版本高于7.0.0，低于7.0.0按原文来。</li>
+<li>在<strong>根目录</strong>下的<code>package.json</code>文件中设置<code>workspaces</code>字段，把你仓库下的所有项目的相对路径都加上：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;workspaces&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;packages/a&quot;</span><span class="punctuation">,</span> <span class="string">&quot;packages/b&quot;</span><span class="punctuation">]</span> <span class="comment">// 子项目到根目录的相对路径</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>如果要在子项目a中添加新的依赖，可用下面的指令：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt; 你的依赖名 &gt; -w &lt; 子项目名 &gt;</span><br><span class="line"><span class="comment"># 举例：安装外部依赖core-js给子项目a</span></span><br><span class="line">npm install core-js -w a</span><br><span class="line"><span class="comment"># 举例：安装内部的本地子项目server给另一个子项目web</span></span><br><span class="line">npm install server -w web</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>lerna + yarn<br>这部分跟2一样，只是看你更喜欢npm还是yarn，我这里一开始接触的npm，所以不举例了。</p>
+</li>
+<li><p>yarn workspaces<br>yarn工作空间内置了mono-repo功能，可以按照原文进行配置。</p>
+</li>
+<li><p>lerna + yarn workspaces<br>可见原文。</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">QXD</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/03/19/tech/npm/@xxx%E5%BD%A2%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88/">http://example.com/2024/03/19/tech/npm/@xxx%E5%BD%A2%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/npm/">npm</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a></div><div class="post_share"><div class="social-share" data-image="/assets/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/03/18/tech/misc/CMD%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/" title="CMD常用命令合集"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMD常用命令合集</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">QXD</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/q1anxiaodong"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E5%95%A5%E4%BC%9A%E6%9C%89-xxx%E6%A0%BC%E5%BC%8F%E7%9A%84npm%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">为啥会有@xxx格式的npm包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%BF%99%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%8C%85"><span class="toc-number">1.1.</span> <span class="toc-text">有哪些情况会出现这种格式的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#monorepo-%E5%92%8C-lerna-%E5%92%8C-Yarn-Workspace"><span class="toc-number">1.2.</span> <span class="toc-text">monorepo 和 lerna 和 Yarn Workspace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEmono-repo%E7%9A%84%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">配置mono-repo的不同方法</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/tech/npm/@xxx%E5%BD%A2%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E6%98%AF%E4%BB%80%E4%B9%88/" title="类似@xxx的依赖是什么？">类似@xxx的依赖是什么？</a><time datetime="2024-03-19T05:48:35.000Z" title="发表于 2024-03-19 13:48:35">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/18/tech/misc/CMD%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/" title="CMD常用命令合集">CMD常用命令合集</a><time datetime="2024-03-18T06:15:42.000Z" title="发表于 2024-03-18 14:15:42">2024-03-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/mind/2024-03-13_18%E5%B2%81%E7%9A%84%E6%97%B6%E5%80%99%E7%9C%9F%E7%9A%84%E5%AF%B9%E6%9C%AA%E6%9D%A5%E4%B8%80%E6%97%A0%E6%89%80%E7%9F%A5/" title="18岁的时候真的对未来一无所知">18岁的时候真的对未来一无所知</a><time datetime="2024-03-13T14:09:04.000Z" title="发表于 2024-03-13 22:09:04">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/tech/misc/windows%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="windows快捷键">windows快捷键</a><time datetime="2024-03-13T08:29:00.000Z" title="发表于 2024-03-13 16:29:00">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/tech/git/git%E5%91%BD%E4%BB%A4%E4%B9%8Bgit_remote/" title="git命令之git_remote">git命令之git_remote</a><time datetime="2024-03-13T05:00:08.000Z" title="发表于 2024-03-13 13:00:08">2024-03-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By QXD</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8795240300" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false"> </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="https://static.pil0txia.com/assets/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
